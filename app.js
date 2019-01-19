@@ -3,6 +3,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//const mysql = require('mysql');
+
+
+var mysql = require('mysql');
+var con = mysql.createConnection({
+	host: "127.0.0.1",
+	user: "ks",
+	password: "1",
+	database: "k1"
+ });
+
+ con.connect(function(err) {
+	if (err){ console.log(err); throw err; }
+	console.log("Connected!");
+});
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
