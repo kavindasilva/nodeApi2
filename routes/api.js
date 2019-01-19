@@ -12,10 +12,15 @@ router.get('/j', function(req, res, next) {
 	//res.render('apiViews/apiView', { title: 'API accessing' });
 	/* this function is passed as a parameter to getAllJson(callback); */
 	apiModal.getAllJson(function(err, rows){ 
+		res.header( "Content-Type", "application/json" );
+		res.header( "Access-Control-Allow-Origin", "*" );
+		//res.header( "Content-Type", "application/json" );
 		if(err)
-			res.status(401).json( {"status":"failed", "info":err} );
+			res.status(403).json( {"status":"failed", "info":err} );
 		else
-			res.status(201).json( {"status":"success", data:rows} );
+			//res.status(201).json( JSON.stringify({"status":"success", "data":rows}) );
+			res.status(201).json( {"status":"success", "data":rows} );
+			//res.json( {"status":"success", "data":rows} );
 	});
 	//res.status(201).json({ json:"ok" });
 });

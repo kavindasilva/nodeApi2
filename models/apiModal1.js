@@ -20,7 +20,7 @@ var apiModal={
 
 	getAllJson:function(callback){
 		//console.log("getall called");
-		let sql="select * from enc11; ";
+		let sql="select * from enc1; ";
 		conn.query(sql, callback);
 	},
 
