@@ -10,7 +10,8 @@ var apiModal=require("../models/apiModal1.js"); //exported apiModal
 
 router.get('/j', function(req, res, next) {
 	//res.render('apiViews/apiView', { title: 'API accessing' });
-	apiModal.getAllJson(function(err, rows){
+	/* this function is passed as a parameter to getAllJson(callback); */
+	apiModal.getAllJson(function(err, rows){ 
 		if(err)
 			res.status(401).json( {"status":"failed", "info":err} );
 		else
@@ -27,9 +28,16 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/2', function(req, res, next) {
+	//res.render('apiViews/apiView', { title: 'API accessing' });
+	//con.
+	res.render('apiViews/apiIndex', { title: 'API accessing' });
+});
+
+
 router.get('/1', function(req, res, next) {
 	//res.render('apiViews/apiView', { title: 'API accessing' });
-	con.
+	//con.
 	res.render('apiViews/apiView', { title: 'API accessing' });
 });
 
