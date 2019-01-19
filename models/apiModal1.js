@@ -18,6 +18,11 @@ var apiModal={
 		});
 	},
 
+	addNew:function(postData,callback){
+ 		//return conn.query("Insert into enc1 values(null,?,?,?)",[postData.email,postData.pass,postData.pic],callback); // this handles sqli
+ 		return conn.query("Insert into enc1 values(null,'"+postData.email+"', '"+postData.pass+"','"+postData.pic+"')",callback); // this provides error on sqli
+ 	},
+
 	getAllJson:function(callback){
 		//console.log("getall called");
 		let sql="select * from enc1; ";

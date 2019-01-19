@@ -4,6 +4,23 @@
 */
 
 
+function insertNew(){
+	$id=$("#id").val();
+	$email=$("#email").val();
+	$pass=$("#pass").val();
+	$pic=$("#pic").val();
+	$.ajax({
+		type:"POST",
+		url: "http://127.0.0.1:3000/api/add",
+		data: { email: $email, pass:$pass, pic:$pic },
+		success: function(data, status){
+			console.log(data);
+			getAllData();
+		}
+	});
+}
+
+
 function getAllData(){
 	$.ajax({
 		type: "GET",

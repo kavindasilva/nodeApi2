@@ -8,6 +8,7 @@ var router = express.Router();
 
 var apiModal=require("../models/apiModal1.js"); //exported apiModal
 
+// view all
 router.get('/j', function(req, res, next) {
 	//res.render('apiViews/apiView', { title: 'API accessing' });
 	/* this function is passed as a parameter to getAllJson(callback); */
@@ -24,6 +25,22 @@ router.get('/j', function(req, res, next) {
 	});
 	//res.status(201).json({ json:"ok" });
 });
+
+
+router.post("/add", function(req, res, next){
+	//prepare
+	apiModal.addNew(req.body, function(err, newID){
+		res.header( "Content-Type", "application/json" );
+		res.header( "Access-Control-Allow-Origin", "*" );
+		if(err)
+			res.status(403).json( {"status":"failed", info:{ node:err, "Req":req.body} } );
+			//res.status(403).json( {"status":"failed", "nested":{ "ss":"S", "gg":"G" } } ); //working
+		else
+			res.json( {"status":"success", info: req.body});
+	});
+});
+
+
 
 
 router.get('/', function(req, res, next) {
