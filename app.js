@@ -6,7 +6,7 @@ var logger = require('morgan');
 //const mysql = require('mysql');
 
 
-var mysql = require('mysql');
+/*var mysql = require('mysql');
 var con = mysql.createConnection({
 	host: "127.0.0.1",
 	user: "ks",
@@ -17,13 +17,14 @@ var con = mysql.createConnection({
  con.connect(function(err) {
 	if (err){ console.log(err); throw err; }
 	console.log("Connected!");
-});
+});*/
 
 
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
+//var apiModal = require('./models/apiModal1');
 
 var app = express();
 
