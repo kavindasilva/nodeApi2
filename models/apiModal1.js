@@ -18,6 +18,10 @@ var apiModal={
 		});
 	},
 
+	delete: function(id, callback){
+		return conn.query("DELETE FROM enc1 where id=?;",[id], callback);
+	},
+
 	addNew:function(postData,callback){
  		//return conn.query("Insert into enc1 values(null,?,?,?)",[postData.email,postData.pass,postData.pic],callback); // this handles sqli
  		return conn.query("Insert into enc1 values(null,'"+postData.email+"', '"+postData.pass+"','"+postData.pic+"')",callback); // this provides error on sqli

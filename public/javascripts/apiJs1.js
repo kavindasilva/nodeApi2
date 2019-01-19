@@ -43,7 +43,10 @@ function printAllData(data){
 	//$("#data1").empty();
 	appendStr="<table><tr> <th>ID</th> <th>Email</th> <th>Password</th> <th>Picture</th> </tr>";
 	for(i of data.data){
-		appendStr+= "<tr> <td>"+i.id+"</td> <td>"+i.email+"</td> <td>"+i.pass+"</td> <td>"+i.pic+"</td> </tr>";
+		//appendStr+= "<tr> <td>"+i.id+"</td> <td>"+i.email+"</td> <td>"+i.pass+"</td> <td>"+i.pic+"</td> </tr>";
+		appendStr+= "<tr> <td>"+i.id+"</td> <td>"+i.email+"</td> <td>"+i.pass+"</td> <td>"+i.pic+"</td>"+
+			"<td><button class='btn btn-default'>E</button></td>"+
+			"<td><button class='btn btn-danger'>D</button></td> </tr>";
 	}
 	appendStr+="</table>";
 
