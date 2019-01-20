@@ -3,6 +3,10 @@
 	JS functions used to display data taken from API
 */
 
+$("#btnCancelEdit").click(function(){
+	switchSaveInsert(0);
+});
+
 function askUser(action, id){
 	//if(action=="edit")
 	if( confirm("Are you sure to "+action+" this item?") ){  //true
@@ -15,6 +19,37 @@ function askUser(action, id){
 			console.log(action);
 	}
 }
+
+function cancelEdit(){
+	//$("#id").attr("disabled",false).empty(); //attr("disabled", true);
+	$("#id").attr("disabled",false).val(""); //attr("disabled", true);
+	$("#email").val("");
+	$("#pass").val("");
+	$("#pic").val("");
+	switchSaveInsert(0);
+}
+
+function saveEdit(){
+	$id=$("#id").val();
+	$email=$("#email").val();
+	$pass=$("#pass").val();
+	$pic=$("#pic").val();
+	$.ajax({
+		type:"PUT",
+		url: "http://127.0.0.1:3000/api/save",
+		data: { email: $email, pass:$pass, pic:$pic, id:$id },
+		success: function(data, status){
+			console.log(data);
+			getAllData();
+			switchSaveInsert(0);
+			clearBox();
+		},
+		error: function(err){
+			console.log(err);
+		}
+	});
+}
+
 
 function editItemLoad(id){
 	$.ajax({
@@ -30,12 +65,34 @@ function editItemLoad(id){
 			$("#pass").val(i.pass);
 			$("#pic").val(i.pic);
 			//$("#").val();
+
+			switchSaveInsert(1);
 		},
 		error: function(err){
 			console.log(err);
 		}
 	});
-	
+}
+
+
+function switchSaveInsert(type){ // 0=new, 1=edit
+	if(type==0){
+		$("#btnInsert").show();
+		$("#btnSaveEdit").hide();
+		$("#btnCancelEdit").hide();
+	}
+	else if(type==1){
+		$("#btnInsert").hide();
+		$("#btnSaveEdit").show();
+		$("#btnCancelEdit").show();
+	}
+}
+
+function clearBox(){
+	$id=$("#id").val("auto").attr("disabled", true);
+	$email=$("#email").val("");
+	$pass=$("#pass").val("");
+	$pic=$("#pic").val("");
 }
 
 

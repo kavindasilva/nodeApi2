@@ -42,6 +42,19 @@ router.get('/view/:id', function(req, res, next) {
 });
 
 
+router.put("/save", function(req, res, next){
+	apiModal.saveItem(req.body, function(err, rows){
+		res.header( "Content-Type", "application/json" );
+		//res.header( "Access-Control-Allow-Origin", "*" );
+		if(err)
+			res.status(500).json( {"status":"failed", "action":"update item", info:{ node:err, "Req":req.body} } );
+			//res.status(403).json( {"status":"failed", "nested":{ "ss":"S", "gg":"G" } } ); //working
+		else
+			res.json( {"status":"success", "action":"update item", info: req.body});
+	});
+});
+
+
 router.post("/add", function(req, res, next){
 	apiModal.addNew(req.body, function(err, newID){
 		res.header( "Content-Type", "application/json" );

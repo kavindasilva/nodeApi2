@@ -36,6 +36,11 @@ var apiModal={
 	getOne:function(id, callback){
 		let sql="select * from enc1 where id=?; ";
 		return conn.query(sql,[id], callback);
+	},
+
+	saveItem: function(putData, callback){
+		//console.log(putData.id);
+ 		return conn.query("UPDATE enc1 SET email=?, pass=?, pic=? WHERE id=? ;",[putData.email,putData.pass,putData.pic,putData.id],callback); 
 	}
 }
 
