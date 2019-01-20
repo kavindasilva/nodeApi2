@@ -3,6 +3,57 @@
 	JS functions used to display data taken from API
 */
 
+function askUser(action, id){
+	//if(action=="edit")
+	if( confirm("Are you sure to "+action+" this item?") ){  //true
+		if(action=="edit")
+			editItemLoad(id);
+			//console.log("edit "+id);
+		else if(action=="delete")
+			deleteItem(id);
+		else
+			console.log(action);
+	}
+}
+
+function editItemLoad(id){
+	$.ajax({
+		type:"GET",
+		url: "http://127.0.0.1:3000/api/view/"+id,
+		data: { /*email: $email, pass:$pass, pic:$pic*/ },
+		success: function(data, status){
+			console.log(data);
+			let i=data.data[0];
+			//getAllData();
+			$("#id").val(i.id).attr("disabled", true);
+			$("#email").val(i.email);
+			$("#pass").val(i.pass);
+			$("#pic").val(i.pic);
+			//$("#").val();
+		},
+		error: function(err){
+			console.log(err);
+		}
+	});
+	
+}
+
+
+function deleteItem(itemID){
+	$.ajax({
+		type: "DELETE",
+		url: "http://127.0.0.1:3000/api/delete/"+itemID,
+		data: itemID,
+		success: function(data, status){
+			console.log(data);
+		},
+		error: function(err){
+			console.log(err);
+		}
+	});
+	getAllData();
+}
+
 
 function insertNew(){
 	$id=$("#id").val();
@@ -16,6 +67,9 @@ function insertNew(){
 		success: function(data, status){
 			console.log(data);
 			getAllData();
+		},
+		error: function(err){
+			console.log(err);
 		}
 	});
 }
@@ -45,8 +99,8 @@ function printAllData(data){
 	for(i of data.data){
 		//appendStr+= "<tr> <td>"+i.id+"</td> <td>"+i.email+"</td> <td>"+i.pass+"</td> <td>"+i.pic+"</td> </tr>";
 		appendStr+= "<tr> <td>"+i.id+"</td> <td>"+i.email+"</td> <td>"+i.pass+"</td> <td>"+i.pic+"</td>"+
-			"<td><button class='btn btn-default'>E</button></td>"+
-			"<td><button class='btn btn-danger'>D</button></td> </tr>";
+			"<td><button class='btn btn-default' onclick=\"askUser('edit',"+i.id+")\">E</button></td>"+
+			"<td><button class='btn btn-danger' onclick=\"askUser('delete',"+i.id+")\" >D</button></td> </tr>";
 	}
 	appendStr+="</table>";
 

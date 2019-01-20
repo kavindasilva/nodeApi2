@@ -33,8 +33,9 @@ var apiModal={
 		conn.query(sql, callback);
 	},
 
-	getOne:function(){
-
+	getOne:function(id, callback){
+		let sql="select * from enc1 where id=?; ";
+		return conn.query(sql,[id], callback);
 	}
 }
 
