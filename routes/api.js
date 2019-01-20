@@ -17,26 +17,61 @@ router.get('/j', function(req, res, next) {
 		res.header( "Access-Control-Allow-Origin", "*" );
 		//res.header( "Content-Type", "application/json" );
 		if(err)
-			res.status(403).json( {"status":"failed", "info":err} );
+			res.status(500).json( {"status":"failed", "action":"view all", "info":err} );
 		else
 			//res.status(201).json( JSON.stringify({"status":"success", "data":rows}) );
-			res.status(201).json( {"status":"success", "data":rows} );
+			res.status(201).json( {"status":"success", "action":"view all", "data":rows} );
 			//res.json( {"status":"success", "data":rows} );
 	});
 	//res.status(201).json({ json:"ok" });
 });
 
-
-router.post("/add", function(req, res, next){
-	//prepare
-	apiModal.addNew(req.body, function(err, newID){
+// view only one
+router.get('/view/:id', function(req, res, next) {
+	if(!req.params.id){
+		res.status(406).json( {"status":"failed", "action":"load edit", "msg": "No ID supplied"} );
+	}
+	apiModal.getOne(req.params.id, function(err, rows){ 
 		res.header( "Content-Type", "application/json" );
 		res.header( "Access-Control-Allow-Origin", "*" );
 		if(err)
-			res.status(403).json( {"status":"failed", info:{ node:err, "Req":req.body} } );
+			res.status(500).json( {"status":"failed", "action":"view one ", "info":err} );
+		else
+			res.status(201).json( {"status":"success", "action":"view one", "data":rows} );
+	});
+});
+
+
+router.post("/add", function(req, res, next){
+	apiModal.addNew(req.body, function(err, newID){
+		res.header( "Content-Type", "application/json" );
+		//res.header( "Access-Control-Allow-Origin", "*" );
+		if(err)
+			res.status(500).json( {"status":"failed", "action":"add item", info:{ node:err, "Req":req.body} } );
 			//res.status(403).json( {"status":"failed", "nested":{ "ss":"S", "gg":"G" } } ); //working
 		else
-			res.json( {"status":"success", info: req.body});
+			res.json( {"status":"success", "action":"add item", info: req.body});
+	});
+});
+
+
+router.delete("/delete/:id", function(req, res,next){
+	if(!req.params.id){
+		console.log("no delete id supplied");
+		res.status(406).json( {"status":"failed", "action":"delete", "msg": "No ID supplied"} );
+	}
+	apiModal.delete(req.params.id, function(err, count){
+		//res.header( "Access-Control-Allow-Origin", "http://127.0.0.1" );
+		res.header( "Content-Type", "application/json" );
+		//res.header( "Access-Control-Allow-Origin", "*" );
+		//res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+		//res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		//res.header("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token");
+
+		if(err)
+			res.status(500).json( {"status":"error", "action":"delete", info:{ node:err, "Req":req.body} } );
+		else
+			res.json( {"status":"success", "action":"delete", info: req.body, "count":count});
 	});
 });
 
